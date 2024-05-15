@@ -1,0 +1,91 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Analyse index{% endblock %}
+
+{% block body %}
+    <div class="d-flex align-items-center justify-content-between">
+    <h1 class="mr-4">Analyse index</h1>
+    <a href="{{ path('app_analyse_new') }}" class="btn btn-primary btn-lg">Create new</a>
+    </div>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nom</th>
+                <th>Type</th>
+                <th>Date</th>
+                <th>actions</th>
+                <th>status</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for analyse in analyses %}
+            <tr>
+                <td>{{ analyse.id }}</td>
+                <td>{{ analyse.nom }}</td>
+                <td>{{ analyse.type }}</td>
+                <td>{{ analyse.date ? analyse.date|date('Y-m-d') : '' }}</td>
+                <td>
+                    {% if is_granted('ROLE_MEDECIN') %}
+                        <a href="{{ path('app_analyse_show', {'id': analyse.id}) }}">show</a>
+                    {% else %}
+                        <button class="btn btn-primary" disabled>show</button>
+                    {% endif %}
+                    {% if is_granted('ROLE_MEDECIN') %}
+                        <a href="{{ path('app_analyse_edit', {'id': analyse.id}) }}">edit</a>
+                    {% else %}
+                        <button class="btn btn-primary" disabled>edit</button>
+                    {% endif %}
+                    
+                </td>
+                <td>
+                {% if is_granted('ROLE_MEDECIN') %}
+                {% if analyse.statut %}
+                    <button class="btn btn-success" disabled>Validé</button>
+                {% else %}
+                    <button class="btn btn-danger" disabled>Non Validé</button>
+                {% endif %}
+                {% else %}
+     <form action="{{ path('app_analyse_change_status', {'id': analyse.id}) }}" method="post">
+        <button type="submit" class="btn {% if analyse.statut %}btn-success{% else %}btn-danger{% endif %}">
+            {% if analyse.statut %}Valide{% else %}Non Valide{% endif %}
+        </button>
+    </form>
+    {% endif %}
+</td>
+               
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+                    
+                        
+
+                        <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const buttons = document.querySelectorAll('.toggle-status');
+        buttons.forEach(button => {
+            button.addEventListener('click', function() {
+                const analyseId = button.dataset.analyseId;
+                const newStatus = !button.classList.contains('btn-success'); // Basculer le statut actuel
+
+                if (newStatus) {
+                    button.classList.remove('btn-danger');
+                    button.classList.add('btn-success');
+                    button.textContent = 'Valide';
+                } else {
+                    button.classList.remove('btn-success');
+                    button.classList.add('btn-danger');
+                    button.textContent = 'Non Valide';
+                }
+            });
+        });
+    });
+</script>
+    
+{% endblock %}

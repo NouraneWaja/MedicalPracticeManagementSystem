@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Analyse{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 offset-md-2">
+                <h1 class="mt-5 mb-4">Create new Analyse</h1>
+                {{ include('analyse/_form.html.twig') }}
+                <a href="{{ path('app_analyse_index') }}" class="btn btn-secondary mt-3">Back to list</a>
+            </div>
+        </div>
+    </div>
+{% endblock %}

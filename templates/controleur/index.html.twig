@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Accueil{% endblock %}
+
+{% block body %}
+ <div class="row mx-auto text-center" style="padding:1em;">
+<div class="container">
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Patients</h5>
+                    <p class="card-text">Gérer les patients.</p>
+                    {% if is_granted('ROLE_MEDECIN') %}
+                        <a href="{{ path('app_patient_index') }}" class="btn btn-primary">Accéder</a>
+                    {% else %}
+                        <button class="btn btn-primary" disabled>Accéder</button>
+                    {% endif %}
+                    
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Analyse</h5>
+                    <p class="card-text">Gérer les analyses.</p>
+                    
+                        <a href="{{ path('app_analyse_index') }}" class="btn btn-primary">Accéder</a>
+                </div>
+            </div>
+        </div>
+     </div>
+</div>
+<form action="{{ path('app_logout') }}" method="post">
+        <button class="btn btn-lg btn-primary" type="submit">
+            Logout
+        </button>
+    </form>
+{% endblock %}

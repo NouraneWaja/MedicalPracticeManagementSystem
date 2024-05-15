@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Home{% endblock %}
+
+{% block stylesheets %}
+
+{% endblock %}
+
+{% block body %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-8 offset-md-2 mt-5 text-center">
+            <h1 class="text-black mb-4">Bienvenu !!!</h1>
+            <p class="lead text-black">Bienvenu dans notre application </p>
+            <div class="text-center mb-4">
+                <a href="{{ path('app_login') }}" class="btn btn-primary btn-lg mr-2">Login</a>
+                <a href="{{ path('app_register') }}" class="btn btn-primary btn-lg ">Register</a>
+            </div>
+            <hr>
+        </div>
+    </div>
+</div>
+{% endblock %}
